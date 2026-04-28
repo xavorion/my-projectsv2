@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simplified Mood Tracker Plan</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+      function DisplayMoods({days, setDays}) {
+
+        
+
+        return(
+
+          <>
+            <h2>Mood Tracker with Emoji Feedback</h2>
+            <h3>Popular Moods: 😍</h3>
+
+            <button
+              
+            >
+              Monday: {handleMoods(1)} 
+            </button>
+            <button
+
+            >
+              Tuesday: {handleMoods(2)}
+            </button>
+            <button
+
+            >
+              Wednesday: {handleMoods(3)}
+            </button>
+            <button
+
+            >
+              Thursday: {handleMoods(4)}
+            </button>
+            <button
+
+            >
+              Friday: {handleMoods(5)}
+            </button>
+
+          </>
+
+        );
+      }
+
+      //Dito niya lahat irarun ang components
+      function App() {
+        const [days, setDays] = React.useState({})
+
+        return(
+          <>
+            <DisplayMoods 
+              days = {days}
+              setDays = {setDays}
+            />
+          </>
+        );
+      }
+
+      const container = document.querySelector('.js-container');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>

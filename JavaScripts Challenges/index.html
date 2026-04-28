@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+</head>
+<body>
+  <h1>Add Employee</h1>
+  <input id="js-inputEmployee" type="text" placeholder="Add Employee">
+  <button id="js-btnAdd">Add task</button>
+  <p id="js-result">Result</p>
+
+
+  <script>
+    const inputEmployee = document.getElementById('js-inputEmployee');
+    const btnAddEmployee = document.getElementById('js-btnAdd');
+    const result = document.getElementById('js-result');
+
+    const storeResult = [];
+
+    function getInput() {
+      const newStorage = [];
+      const divElement = document.createElement('div');
+      const pElement = document.createElement('p');
+      if (inputEmployee.value === "") {
+        result.innerText = "Empty, Please add employee";
+      } else {
+        result.innerText = inputEmployee.value;
+        storeResult.push(newStorage);
+        // divElement.appendChild(pElement)
+      }
+      inputEmployee.value = "";
+      divElement.append(pElement)
+    }
+
+    btnAddEmployee.addEventListener('click',getInput);
+
+  </script>
+</body>
+</html>

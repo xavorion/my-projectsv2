@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping List App</title>
+</head>
+<body>
+  <input type="text" id="inputItem" placeholder="Add Item">
+  <button id="addBtn">Add Item</button>
+  <ul id="showItemList"></ul>
+
+  <script>
+    const inputItem = document.getElementById('inputItem');
+    const addBtn = document.getElementById('addBtn');
+    const showItemList = document.getElementById('showItemList');
+
+    let item = JSON.parse(localStorage.getItem('myItems')) || [];
+
+    addBtn.addEventListener('click', addItem);
+
+    renderLoad();
+
+    function addItem() {
+
+      if (inputItem.value === '') return;
+
+      const li = document.createElement('li');
+      li.textContent = inputItem.value;
+      showItemList.appendChild(li);
+      
+      deleteItem(li, inputItem.value);
+
+      item.push(inputItem.value);
+      saveStorage();
+      inputItem.value = '';
+    }
+
+    function deleteItem(li, itemInput) {
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      li.appendChild(deleteBtn);
+
+      deleteBtn.addEventListener('click', () => removeItem(li, itemInput));
+    }
+
+    function removeItem(li, itemInput) {
+      item = item.filter(items => items !== itemInput);
+      saveStorage();
+      li.remove();
+    }
+
+    function saveStorage() {
+      localStorage.setItem('myItems', JSON.stringify(item));
+    }
+
+    function renderLoad() {
+      item.forEach(items => {
+        const li = document.createElement('li');
+        li.textContent = items;
+        deleteItem(li, items);
+        showItemList.appendChild(li);
+      })
+    }
+  </script>
+</body>
+</html>

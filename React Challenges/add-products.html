@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+      function AddCategory({addCategory}) {
+        const [title, setTitle] = React.useState("");
+        const [content, setContent] = React.useState("");
+
+        function handleAddCategory() {
+          if (title === "" && content === "") {
+            return;
+          }
+
+          addCategory({
+            title: title,
+            content: content
+          })
+
+          setTitle('');
+          setContent('');
+        }      
+
+        function onSetTitle(e) {
+          setTitle(e.target.value);
+        }
+
+        function onSetContent(e) {
+          setContent(e.target.value);
+        }
+
+
+        return(
+          <>
+            <div>
+              <input type="text" 
+                placeholder="Category Title"
+                required
+                onChange={onSetTitle}
+                value={title}
+              />  
+            </div>
+            <div>
+              <textarea 
+                placeholder="Add Description Here..."
+                rows={5}
+                cols={30}
+                required
+                onChange={onSetContent}
+                value={content}
+                maxLength={300}
+              />
+            </div>
+            <button onClick={handleAddCategory}>Add Category</button>            
+          </>
+        );
+      }
+
+      function CategoryList({category, sortOrder}) {
+
+        const sortedCategory = [...category];
+
+        if (sortOrder === "desc") {
+          sortedCategory.reverse();
+        }
+
+        return(
+          <>
+            <h2>Category List</h2>
+            {/*Conditional Rendering*/}
+            {sortedCategory.length === 0 ? (
+              <p>Empty Category Please Add</p>
+            ) : (
+              sortedCategory.map((categories, index) => (
+                <div key={index}>
+                  <h3>{categories.title.toUpperCase()}</h3>
+                  <p>{categories.content}</p>
+                  <small>Index: {index + 1}</small>
+                  <hr />
+                </div>
+              ))
+            )}
+          </>
+        );
+
+      }
+      
+      
+      //Dito niya lahat irarun ang components
+      function App() {
+        const [category, setCategory] = React.useState("");
+        // const [content, setContent] = React.useState([]);
+        const [sortOrder, setSortOrder] = React.useState("asc");
+
+        function handleSortOrder(e) {
+          setSortOrder(e.target.value)
+        }
+
+        function addCategory(categories) {
+          setCategory([...category, categories])
+        }
+
+
+        return(
+          <>
+            <AddCategory 
+              addCategory={addCategory}
+            />
+            {/*Sort Category*/}
+            <select onChange={handleSortOrder}>
+              <option value="asc">Oldest First</option>  
+              <option value="desc">Newest First</option>  
+            </select>
+
+            <CategoryList 
+              category={category}
+              sortOrder={sortOrder}
+            />
+          </>
+        );
+      }
+
+      const container = document.querySelector('.js-container');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>

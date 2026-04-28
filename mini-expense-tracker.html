@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Expense Tracker (Pro Version)</title>
+</head>
+<body>
+  <input type="text" id="inputExpense" placeholder="Expense Name">
+  <input type="text" id="inputAmount" placeholder="Amount">
+  <label for="inputCategory">Category</label>
+  <select id="inputCategory" required>
+    <option value="" disabled selected hidden>Select Category</option>
+    <option value="food">Food</option>
+    <option value="bills">Bills</option>
+    <option value="travel">Travel</option>
+    <option value="etc">Etc</option>
+  </select>
+  <button id="addBtn">Add Expense</button>
+  <ul id="showExpenseList"></ul>
+
+  <script>
+    const inputExpense = document.querySelector('#inputExpense');
+    const inputAmount = document.querySelector('#inputAmount');
+    const addBtn = document.querySelector('#addBtn');
+    const showExpenseList = document.querySelector('#showExpenseList');
+
+    addBtn.addEventListener('click', addExpense);
+    
+    function addExpense() {
+      showExpenseList.textContent = '';
+      if (inputExpense.value === '' && Number(inputAmount.value) < 0 || inputAmount.value === '') {
+        showExpenseList.textContent = 'No Expenses Record';
+      }
+    }
+  </script>
+</body>
+</html>

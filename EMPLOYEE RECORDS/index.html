@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mask Password Example</title>
+<style>
+  body { font-family: system-ui, Arial; padding: 18px; max-width: 520px; }
+  label { display:block; margin-top:8px; }
+  input[type="text"], input[type="password"] { width:100%; padding:8px; margin-top:4px; }
+  .creds { margin-top:16px; padding:12px; border:1px solid #ddd; border-radius:6px; background:#fafafa; }
+  .creds pre { margin:0; white-space:pre-wrap; font-family:inherit; }
+  .small { font-size:0.9em; color:#666; margin-top:6px; }
+</style>
+</head>
+<body>
+
+<h3>Enter credentials</h3>
+
+<label>
+  Email
+  <input id="email" type="text" placeholder="aaaaaa" value="aaaaaa">
+</label>
+
+<label>
+  Password
+  <input id="password" type="password" placeholder="======" value="sssssss">
+</label>
+
+<label style="margin-top:8px;">
+  <input id="showToggle" type="checkbox"> Show password under credentials
+</label>
+
+<button id="showBtn" style="margin-top:10px;">Show Credentials</button>
+
+<div class="creds" id="credentials" aria-live="polite" style="display:none;">
+  <strong>Your Credentials:</strong>
+  <pre id="credsText"></pre>
+</div>
+
+<script>
+const emailEl = document.getElementById('email');
+const pwdEl = document.getElementById('password');
+const btn = document.getElementById('showBtn');
+const creds = document.getElementById('credentials');
+const credsText = document.getElementById('credsText');
+const showToggle = document.getElementById('showToggle');
+
+function maskPassword(pw) {
+  // Use the bullet char U+2022 — visually similar to many password fields
+  return '•_•'.repeat(pw.length || 7); // if empty, show some placeholder bullets
+}
+
+function render() {
+  const email = emailEl.value || '';
+  const pwd = pwdEl.value || '';
+  const showReal = showToggle.checked;
+
+  const passwordLine = showReal ? pwd : maskPassword(pwd);
+  credsText.textContent = `Email: ${email}\nPassword: ${passwordLine}`;
+  creds.style.display = 'block';
+}
+
+btn.addEventListener('click', render);
+
+// optional: update live as user types
+emailEl.addEventListener('input', render);
+pwdEl.addEventListener('input', render);
+showToggle.addEventListener('change', render);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto','Helvetica',sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 10px;
+}
+
+div {
+  background-color: black;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 15px;
+  position: relative;
+}
+  div::before {
+    content: '';
+    position: absolute;
+    height: 0;
+    width: 0;
+    
+    bottom: -15px;
+    left: 20px;
+
+    
+    border: 15px solid rgb(255, 0, 0);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+  }

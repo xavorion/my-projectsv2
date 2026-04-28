@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" name="addTask" id="inputTask">
+  <button id="btnAdd">Add Task</button>
+
+  <ul id="showListTask"></ul>
+  <script>
+    const inputTask = document.getElementById('inputTask');
+    const btnAdd = document.getElementById('btnAdd');
+    const showListTask = document.getElementById('showListTask');
+
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    btnAdd.addEventListener('click', addTask);
+
+    function saveStorage() {
+      localStorage.setItem('tasks',JSON.stringify(tasks));
+    }
+
+    function addTask() {
+      const li = document.createElement('li');
+      li.textContent = inputTask.value;
+      li.addEventListener('click', () => {
+        if (li.style.textDecoration === 'line-through') {
+          li.style.textDecoration = '';
+          li.style.color = 'var(--color-text-primary)';
+        } else {
+          li.style.textDecoration = 'line-through';
+          li.style.color = 'gray';
+        }
+      });
+      deleteTask(li, inputTask.value);
+      showListTask.appendChild(li);
+      tasks.push(inputTask.value);
+      saveStorage();
+      inputTask.value = '';
+    }
+
+    function deleteTask(li, taskText) {
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.addEventListener('click', () => {
+        tasks = tasks.filter( task => task !== taskText);
+        saveStorage();
+        li.remove();
+      });
+      li.appendChild(deleteBtn);
+    }
+
+    function loadTask() {
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.textContent = task;
+        deleteTask(li, task);
+        showListTask.appendChild(li);
+      });
+    }
+
+    loadTask()
+  </script>
+</body>
+</html>
