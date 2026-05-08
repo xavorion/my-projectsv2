@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter App</title>
+</head>
+<body>
+  <button id="addBtn">+</button>
+  <button id="subBtn">-</button>
+  <button id="resetBtn">Reset</button>
+  <p id="showCount"></p>
+
+
+  <script>
+    const addBtn = document.querySelector('#addBtn');
+    const subBtn = document.querySelector('#subBtn');
+    const resetBtn = document.querySelector('#resetBtn');
+    const showCount = document.querySelector('#showCount');
+
+    let count = Number(localStorage.getItem('count')) || 0;
+
+
+    updateCount();
+
+    addBtn.addEventListener('click', addCounter);
+    subBtn.addEventListener('click', subCounter);
+    resetBtn.addEventListener('click', clearCount);
+
+    // Add Count
+    function addCounter() {
+      count++;
+      updateCount();
+      save();
+    }
+
+    // Subtract Count
+    function subCounter() {
+      count--;
+      updateCount();
+      save();
+    }
+
+    // Clear Count
+    function clearCount() {
+      count = 0;
+      updateCount();
+      localStorage.removeItem('count');
+    }
+
+    // Update Count
+    function updateCount() {
+      // show count
+      showCount.textContent = count;
+
+      //
+
+      subBtn.disabled = count <= 0;;
+
+    }
+
+    // Save to Local Storage
+    function save() {
+      localStorage.setItem('count', count);
+    }
+
+  </script>
+</body>
+</html>
